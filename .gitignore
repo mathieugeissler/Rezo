@@ -5,9 +5,11 @@
 /app/config/parameters.yml
 /app/logs/*
 !app/logs/.gitkeep
+/web/bundles
+/web/css
+/web/js
 /app/phpunit.xml
 /bin/
 /vendor/
-/web/bundles/
 
 composer.lock
