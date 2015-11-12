@@ -1,0 +1,10 @@
+blog_homepage:
+    path:     /
+    defaults: { _controller: BlogBundle:Default:index }
+
+blog_post_view:
+    path:     /post/{id}
+    defaults: { _controller: BlogBundle:Post:view }
+    requirements:
+        id: \d+
+
