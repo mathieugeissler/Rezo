@@ -4,6 +4,18 @@
 {% block page_subtitle %} control {% endblock %}
 
 {% block page_content %}
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="callout callout-{{ type }}">
+                    <h4>{{ message.title }}</h4>
+                    <p>{{ message.msg }}</p>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+
     <div class="row">
         <div class="col-md-4">
 
@@ -33,13 +45,10 @@
                 <!-- /.box-header -->
                 <div class="box-body table-responsive">
                     <div id="table">
-
+                        {% include 'AdminBundle:Blog/Post:table.html.twig' with {'posts': posts} %}
                     </div>
                 </div>
                 <!-- /.box-body -->
-                <div id="loadTable" class="overlay">
-                    <i class="fa fa-refresh fa-spin"></i>
-                </div>
             </div>
         </div>
         <!-- /.box -->
@@ -49,92 +58,35 @@
                     <h3 class="box-title">Add or edit a post</h3>
                 </div>
                 <div id="form">
-
-                </div>
-                <div id="loadForm" class="overlay">
-                    <i class="fa fa-refresh fa-spin"></i>
+                    {% include 'AdminBundle:Blog/Post:form.html.twig' with {'form': form} %}
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
 
-   {% block javascripts_inline %}
-       <script>
-           $(document).ready(function () {
+{% block javascripts_inline %}
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                "dom": 't<"box-footer clearfix"p>',
+                "columnDefs": [
+                    {
+                        "targets": -1,
+                        "width": "15%",
+                        "searchable": false,
+                        "orderable": false,
+                    },
+                    {
+                        "targets": 0,
+                        "width": "10%",
+                    },
+                ]
+            });
+            $('[data-toggle="tooltip"]').tooltip();
 
-               loadPosts();
+            $('textarea').wysihtml5();
+        });
 
-               //Recup des posts
-               function loadPosts() {
-                   $.ajax({
-                       type: 'POST',
-                       dataType: 'json',
-                       url: '{{ path('admin_blog_post_load') }}',
-                       success: function (data) {
-                           $('#form').html(data.form);
-                           $('#table').html(data.table);
-                           $('#dataTable').DataTable({
-                               "dom": 't<"box-footer clearfix"p>',
-                               "columnDefs": [
-                                   {
-                                       "targets": -1,
-                                       "width": "15%",
-                                       "searchable": false,
-                                       "orderable": false,
-                                   },
-                                   {
-                                       "targets": 0,
-                                       "width": "10%",
-                                   },
-                               ]
-                           });
-
-                           $('[data-toggle="tooltip"]').tooltip();
-
-                           $('#loadTable').addClass('hidden');
-                           $('#loadForm').addClass('hidden');
-                           //Editer un post
-                           $('.editButton').click(function () {
-                               $('#loadForm').removeClass('hidden');
-                               var id = $(this).attr('id');
-                               var route = Routing.generate('admin_blog_post_edit', {id: id});
-                               getForm(this, route);
-                           });
-                       }
-                   });
-               }
-
-               function getForm(form, route) {
-                   $.ajax({
-                       type: 'POST',
-                       dataType: 'json',
-                       url: route,
-                       success: function (data) {
-                           $('#form').html(data.form);
-                           $('#loadForm').addClass('hidden');
-
-                           $('#submitForm').click(function () {
-                               $('#loadForm').removeClass('hidden');
-                               var form = $('#PostType');
-                               sendForm(form);
-                           });
-                       }
-                   });
-               }
-
-               function sendForm(form) {
-                   $.ajax({
-                       type: form.attr('method'),
-                       url: form.attr('action'),
-                       data: form.serialize(),
-                       success: function() {
-                           $('#loadForm').addClass('hidden');
-                            loadPosts();
-                       }
-                   });
-               }
-           });
-       </script>
-   {% endblock %}
-
+    </script>
+{% endblock %}

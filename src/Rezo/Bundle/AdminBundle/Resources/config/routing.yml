@@ -12,20 +12,13 @@ admin_menuitem:
 
 # ... Admin Blog
 admin_blog_post:
-    path:     /blog/post
-    defaults: { _controller: AdminBundle:AdminPost:index }
-
-admin_blog_post_edit:
-    path: /blog/post/{id}/edit
-    defaults: { _controller: AdminBundle:AdminPost:edit }
+    path:     /blog/post/{id}
+    defaults: { _controller: AdminBundle:AdminPost:index, id: null }
     requirements:
-        id: \d+
-        methods: POST
-    options:
-        expose: true
+      id: \d+
 
-admin_blog_post_load:
-    path: /blog/post/load
-    defaults: { _controller: AdminBundle:AdminPost:load }
+admin_blog_post_delete:
+    path: /blog/post/{id}/delete
+    defaults: { _controller: AdminBundle:AdminPost:delete }
     requirements:
-        methods: POST
+      id: \d+

@@ -3,8 +3,8 @@
     {{ form_widget(form) }}
 </div>
 <div class="box-footer clearfix">
-    <button type="reset" class="btn btn-warning pull-left"><i class="fa fa-times"></i> Cancel
-    </button>
+    <a href="{{ path('admin_blog_post') }}"><button type="button" class="btn btn-warning pull-left"><i class="fa fa-times"></i> Cancel
+    </button></a>
     <button id="submitForm" type="submit" class="btn btn-primary pull-right"><i
                 class="fa fa-check-square"></i> Submit
     </button>

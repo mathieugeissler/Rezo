@@ -1,98 +1,64 @@
 <?php
 namespace Rezo\Bundle\AdminBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Rezo\Bundle\BlogBundle\Form\PostType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Rezo\Bundle\BlogBundle\Entity\Post;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminPostController extends Controller
 {
-
-    public function indexAction()
-    {
-        $post = new Post();
-        $form = $this->createForm(new PostType(), $post);
-
-        return $this->render(
-            'AdminBundle:Blog/Post:index.html.twig'
-        );
-    }
-
-    public function editAction(Request $request, Post $post, $id)
-    {
-        if ($request->isXmlHttpRequest()) {
-
-            $form = $this->createForm(
-                new PostType(),
-                $post,
-                array(
-                    'action' => $this->generateUrl(
-                        'admin_blog_post_edit',
-                        array(
-                            'id' => $id,
-                        )
-                    ),
-                )
-            );
-
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $user = $this->getUser();
-                $em = $this->getDoctrine()->getManager();
-                $post->setAuthor($user);
-                $em->persist($post);
-                $em->flush();
-
-                return new JsonResponse(
-                    array(
-                        'message' => 'Success',
-                    ), 200
-                );
-            }
-
-            return new JsonResponse(
-                array(
-                    'form' => $this->renderView(
-                        'AdminBundle:Blog/Post:form.html.twig',
-                        array(
-                            'form' => $form->createView(),
-                        )
-                    ),
-                )
-            );
-        }
-        return false;
-    }
-
-    /** Return all Posts
-     * @return JsonResponse
-     */
-    public function loadAction()
+    public function indexAction(Request $request, $id, Post $post = null)
     {
         $em = $this->getDoctrine()->getManager();
-        $posts = $em->getRepository("BlogBundle:Post")->findAll();
 
-        $post = new Post();
+        if($post === null) {
+            $post = new Post();
+        }
         $form = $this->createForm(new PostType(), $post);
+        $form->handleRequest($request);
 
-        return new JsonResponse(
-            array(
-                'table' => $this->renderView(
-                    'AdminBundle:Blog/Post:table.html.twig',
-                    array(
-                        'posts' => $posts,
-                    )
-                ),
-                'form' => $this->renderView(
-                    'AdminBundle:Blog/Post:form.html.twig',
-                    array(
-                        'form' => $form->createView(),
-                    )
-                ),
+        if($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
+            $post->setAuthor($user);
+
+            $em->persist($post);
+            $em->flush();
+
+            if($id === null) {
+                $this->addFlash('success', array(
+                    'title' => 'Post',
+                    'msg' => 'New post created'
+                ));
+            } else {
+                $this->addFlash('info', array(
+                    'title' => 'Post',
+                    'msg' => 'Post #'.$id.' saved',
+                ));
+            }
+            return $this->redirectToRoute('admin_blog_post');
+        }
+
+        $posts = $em->getRepository('BlogBundle:Post')->findAll();
+        return $this->render(
+            'AdminBundle:Blog/Post:index.html.twig', array(
+                'posts' => $posts,
+                'form' => $form->createView(),
             )
         );
+    }
+
+    public function deleteAction(Post $post, $id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($post);
+        $em->flush();
+
+        $this->addFlash('warning', array(
+            'title' => 'Post',
+            'msg' => 'Post #'.$id.' deleted'
+        ));
+
+        return $this->redirectToRoute('admin_blog_post');
     }
 }
