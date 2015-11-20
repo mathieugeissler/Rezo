@@ -10,7 +10,7 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $posts = $em->getRepository("BlogBundle:Post")->findAll();
+        $posts = $em->getRepository("BlogBundle:Post")->findByPublished(true);
 
         return $this->render('BlogBundle:Default:index.html.twig', array(
             'posts' => $posts,

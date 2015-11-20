@@ -53,10 +53,17 @@ class Post
      */
     private $author;
 
+    /**
+     * @var boolean
+     * @ORM\Column(name="published", type="boolean")
+     */
+    private $published;
 
     public function __construct() {
         $this->date = new \DateTime();
     }
+
+
 
 
     /**
@@ -165,5 +172,25 @@ class Post
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Get Published
+     *
+     * @return boolean
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * Set Published
+     *
+     * @param boolean $published
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
     }
 }

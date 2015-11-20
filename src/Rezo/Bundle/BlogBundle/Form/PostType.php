@@ -17,6 +17,9 @@ class PostType extends AbstractType
         $builder
             ->add('title')
             ->add('content')
+            ->add('published', 'checkbox', array(
+                'required' => false,
+            ))
         ;
     }
     

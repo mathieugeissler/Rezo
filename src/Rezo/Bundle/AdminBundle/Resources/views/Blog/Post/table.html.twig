@@ -10,11 +10,16 @@
     </thead>
     <tbody>
     {% for post in posts %}
+        {% if post.published == true %}
+            {% set published = '<span class="label label-success"><i class="fa fa-check"></i> Published</span>' %}
+            {% else %}
+                {% set published = '<span class="label label-danger"><i class="fa fa-times"></i> Published</span>' %}
+        {% endif %}
         <tr>
             <td>{{ post.id }}</td>
             <td>{{ post.title }}</td>
             <td>{{ post.author.username }}</td>
-            <td>Status</td>
+            <td>{{ published|raw }}</td>
             <td>
                 <a href="{{ path('admin_blog_post', {'id': post.id}) }}">
                     <button id="{{ post.id }}" type="button" class="btn btn-info btn-xs editButton"
