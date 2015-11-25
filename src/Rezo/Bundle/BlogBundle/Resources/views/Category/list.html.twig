@@ -1,0 +1,10 @@
+{% extends 'CoreBundle::layout.html.twig' %}
+
+{% block body %}
+    <ul>
+{% for category in categories %}
+    <li><a href="{{ path('blog_category_view', {'name': category.name}) }}">{{ category.name }}</a></li>
+{% endfor %}
+    </ul>
+{% endblock %}
+

@@ -1,2 +1,36 @@
 {% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}
 
+{% block title %}Rezo - Admin{% endblock %}
+
+{% block message_flash %}
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type }} alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4>
+                {% if type == 'danger' %}
+                    <i class="icon fa fa-ban"></i>
+                    {% elseif type == 'info' %}
+                        <i class="icon fa fa-info"></i>
+                    {% elseif type == 'warning' %}
+                    <i class="icon fa fa-warning"></i>
+                    {% else%}
+                    <i class="icon fa fa-check"></i>
+                {% endif %}
+                        {{ message.title }}</h4>
+                    {{ message.msg }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block avanzu_admin_footer %}
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 0.01
+        </div>
+        <strong>Copyright &copy; 2015 <a href="http://mathieugeissler.fr">Mathieu Geissler</a>.</strong> All rights reserved.
+    </footer>
+{% endblock %}

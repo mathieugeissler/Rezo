@@ -1,0 +1,12 @@
+<div class="box-body">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+</div>
+<div class="box-footer clearfix">
+    <a href="{{ path('admin_blog_category') }}"><button type="button" class="btn btn-warning pull-left"><i class="fa fa-times"></i> Cancel
+        </button></a>
+    <button id="submitForm" type="submit" class="btn btn-primary pull-right"><i
+                class="fa fa-check-square"></i> Submit
+    </button>
+</div>
+{{ form_end(form) }}

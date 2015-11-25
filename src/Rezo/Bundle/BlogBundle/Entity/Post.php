@@ -59,11 +59,20 @@ class Post
      */
     private $published;
 
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->date = new \DateTime();
     }
 
-
+    /**
+     * @ORM\ManyToMany(targetEntity="Rezo\Bundle\BlogBundle\Entity\Category")
+     * @ORM\JoinTable(name="post_category",
+     *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
+     * )
+     */
+    protected $categories;
 
 
     /**
@@ -149,7 +158,6 @@ class Post
     }
 
 
-
     /**
      * Set author
      *
@@ -192,5 +200,22 @@ class Post
     public function setPublished($published)
     {
         $this->published = $published;
+    }
+
+
+    /**
+     * @return Category
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param Category $categories
+     */
+    public function setCategories(Category $categories)
+    {
+        $this->categories = $categories;
     }
 }

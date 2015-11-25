@@ -30,6 +30,7 @@ class MenuItemListListener
             // Admin Blog
             $blog = new MenuItemModel('blog', 'Blog', '', $rarg, 'fa fa-dashboard'),
             $blog->addChild(new MenuItemModel('blog_posts', 'Posts', 'admin_blog_post', $rarg, 'fa fa-dashboard')),
+            $blog->addChild(new MenuItemModel('blog_categories', 'Categories', 'admin_blog_category', $rarg, 'fa fa-dashboard')),
 
         );
 

@@ -13,12 +13,24 @@ admin_menuitem:
 # ... Admin Blog
 admin_blog_post:
     path:     /blog/post/{id}
-    defaults: { _controller: AdminBundle:AdminPost:index, id: null }
+    defaults: { _controller: AdminBundle:Blog/AdminPost:index, id: null }
     requirements:
       id: \d+
 
 admin_blog_post_delete:
     path: /blog/post/{id}/delete
-    defaults: { _controller: AdminBundle:AdminPost:delete }
+    defaults: { _controller: AdminBundle:Blog/AdminPost:delete }
+    requirements:
+      id: \d+
+
+admin_blog_category:
+    path: /blog/category/{id}
+    defaults: { _controller: AdminBundle:Blog/AdminCategory:index, id: null}
+    requirements:
+      id: \d+
+
+admin_blog_category_delete:
+    path: /blog/category/{id}/delete
+    defaults: { _controller: AdminBundle:Blog/AdminCategory:delete }
     requirements:
       id: \d+

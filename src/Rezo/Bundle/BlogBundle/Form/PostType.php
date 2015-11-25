@@ -2,6 +2,7 @@
 
 namespace Rezo\Bundle\BlogBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,6 +20,13 @@ class PostType extends AbstractType
             ->add('content')
             ->add('published', 'checkbox', array(
                 'required' => false,
+            ))
+            ->add('categories', 'entity', array(
+                'class' => 'Rezo\Bundle\BlogBundle\Entity\Category',
+                'multiple' => true,
+                'required' => false,
+                'expanded' => true,
+                'choice_label' => 'name',
             ))
         ;
     }

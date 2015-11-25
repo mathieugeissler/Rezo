@@ -8,3 +8,13 @@ blog_post_view:
     requirements:
         id: \d+
 
+blog_category_view:
+    path: /category/{name}
+    defaults: { _controller: BlogBundle:Category:show }
+    requirements:
+        name: .+
+
+blog_category_list:
+    path: /category/
+    defaults: { _controller: BlogBundle:Category:list }
+
