@@ -29,6 +29,13 @@ class Category
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="color", type="string", length=255)
+     */
+    private $color;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Rezo\Bundle\BlogBundle\Entity\Post")
      * @ORM\JoinTable(name="post_category",
      *      joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")},
@@ -85,6 +92,22 @@ class Category
     public function setPosts($posts)
     {
         $this->posts = $posts;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string $color
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
     }
 
 

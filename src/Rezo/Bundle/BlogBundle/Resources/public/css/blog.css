@@ -1,0 +1,39 @@
+body {
+    background: #F6F7F9;
+}
+
+#blog {
+    margin-top: 50px;
+}
+
+.panel-default {
+    border-radius: 5px;
+    border: none;
+}
+
+.panel-header {
+
+}
+
+.panel-body {
+    padding-top: 0;
+    border: none;
+}
+
+.panel-body h4 {
+    text-transform: uppercase;
+}
+
+.panel-body > a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {
+    background-color: #F6F7F9;
+    border-color: #F6F7F9;
+    color: #555;
+}
+
+.panel-footer {
+    border: none;
+    border-top: solid 1px #E7E7E7;
+    background-color: #fff;
+    color: #B2B2B2;
+}
+

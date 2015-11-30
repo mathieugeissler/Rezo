@@ -2,7 +2,6 @@
 
 namespace Rezo\Bundle\BlogBundle\Form;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +17,16 @@ class PostType extends AbstractType
         $builder
             ->add('title')
             ->add('content')
+            ->add('format', 'choice', array(
+                'choices' => array(
+                    'Default' => 'Default',
+                    'Link' => 'Link',
+                    'Gallery' => 'Gallery',
+                    'Movie' => 'Movie',
+                ),
+                'required' => true,
+                'choices_as_values' => true,
+            ))
             ->add('published', 'checkbox', array(
                 'required' => false,
             ))
@@ -27,10 +36,9 @@ class PostType extends AbstractType
                 'required' => false,
                 'expanded' => true,
                 'choice_label' => 'name',
-            ))
-        ;
+            ));
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

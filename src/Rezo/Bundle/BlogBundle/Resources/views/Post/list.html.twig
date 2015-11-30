@@ -1,22 +1,35 @@
-{% for post in posts %}
-    {% if post.published == true %}
-        <h2>
-            <a href="{{ path('blog_post_view', { id: post.id }) }}">{{ post.title }}</a>
-        </h2>
+{% set colorCategory = "" %}
+{% for article in post %}
+    {% if article.published == true %}
+        {% for cat in article.categories %}
+            {% set colorCategory = cat.color %}
+        {% endfor %}
+        <div class="panel panel-default">
+            <div class="panel-header" style="border-bottom: solid 6px {{ colorCategory }};">
+                <div class="panel-thumbnail">
+                    <img class="img-responsive"
+                         src="http://www.online-image-editor.com//styles/2014/images/example_image.png"/>
+                </div>
+            </div>
+            <div class="panel-body">
+                <h4>
+                    {% for cat in article.categories %}
+                        <a style="color: {{ cat.color }}"
+                           href="{{ path('blog_category_view', {'name': cat.name}) }}">{{ cat.name }}</a>
+                    {% endfor %}
+                </h4>
 
-        <p class="lead">
-            by <a href="{{ path('user_profil_name', { username: post.author }) }}">{{ post.author }}</a>
-        </p>
+                <h2>{{ article.title }}</h2>
 
-        <p><span class="glyphicon glyphicon-time"></span> Posted
-            on {{ post.date|date('d M Y H:m:s', 'Europe/Paris') }}</p>
-        <hr>
-        <img class="img-responsive" src="http://placehold.it/900x300" alt="">
-        <hr>
-        <p>{{ post.content }}</p>
-        <a class="btn btn-primary" href="{{ path('blog_post_view', { id: post.id }) }}">Read More <span
-                    class="glyphicon glyphicon-chevron-right"></span></a>
-
-        <hr>
+                <p>{{ article.content|raw }}</p>
+            </div>
+            <div class="panel-footer">
+                <i class="glyphicon glyphicon-comment"></i> 5 <i
+                        class="glyphicon glyphicon-heart"></i> 30
+                <a href="{{ path('blog_post_view', {'id': article.id}) }}">
+                    <button type="button" class="btn btn-default btn-sm">Voir</button>
+                </a>
+            </div>
+        </div>
     {% endif %}
 {% endfor %}

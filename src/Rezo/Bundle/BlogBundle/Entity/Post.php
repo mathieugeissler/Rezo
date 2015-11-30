@@ -5,6 +5,8 @@ namespace Rezo\Bundle\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Rezo\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Post
@@ -73,6 +75,12 @@ class Post
      * )
      */
     protected $categories;
+
+    /**
+     * @var string
+     * @ORM\Column(name="format", type="text")
+     */
+    private $format;
 
 
     /**
@@ -202,20 +210,58 @@ class Post
         $this->published = $published;
     }
 
-
     /**
-     * @return Category
+     * @return Collection
      */
     public function getCategories()
     {
-        return $this->categories;
+        return $this->categories ?: $this->categories = new ArrayCollection();
     }
 
     /**
-     * @param Category $categories
+     * @param Category $category
+     *
+     * @return Post
      */
-    public function setCategories(Category $categories)
+    public function setCategories(Category $category)
     {
-        $this->categories = $categories;
+        if (!$this->getCategories()->contains($category)) {
+            $this->getCategories()->add($category);
+        }
+
+        return $this;
     }
+
+    public function getCategoryName() {
+        $names = array();
+        foreach ($this->getCategories() as $group) {
+            $names[] = $group->getName();
+        }
+        return $names;
+    }
+
+    public function getCategoryColor() {
+        $color = array();
+        foreach ($this->getCategories() as $category) {
+            $color[] = $category->getColor();
+        }
+        return $color;
+    }
+
+    /**
+     * @return String
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
+
+    /**
+     * @param String $format
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
+    }
+
 }

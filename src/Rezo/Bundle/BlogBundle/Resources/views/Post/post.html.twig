@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+    <div class="panel-header" style="border-bottom: solid 6px">
+        <div class="panel-thumbnail">
+            <img class="img-responsive"
+                 src="http://www.online-image-editor.com//styles/2014/images/example_image.png"/>
+        </div>
+    </div>
+    <div class="panel-body">
+        <h4>
+            {% for cat in post.categories %}
+                <a style="color: {{ cat.color }}"
+                   href="{{ path('blog_category_view', {'name': cat.name}) }}">{{ cat.name }}</a>
+            {% endfor %}
+        </h4>
+
+        <h2>{{ post.title }}</h2>
+
+        <p>{{ post.content|raw }}</p>
+    </div>
+    <div class="panel-footer">
+        <i class="glyphicon glyphicon-comment"></i> 5 <i
+                class="glyphicon glyphicon-heart"></i> 30
+    </div>
+</div>

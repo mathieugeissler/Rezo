@@ -9,16 +9,19 @@ class CategoryController extends Controller
 {
     public function showAction(Category $category, $name)
     {
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository('BlogBundle:Category')->findAll();
         $posts = $category->getPosts();
 
-        return $this->render('BlogBundle:Category:show.html.twig', array(
+        return $this->render('BlogBundle:Default:index.html.twig', array(
+            'categories' => $categories,
             'category' => $category,
             'posts' => $posts,
         ));
     }
 
     public function listAction() {
-        $em = $this->getDoctrine()->getManager();
+
 
         $categories = $em->getRepository('BlogBundle:Category')->findAll();
 

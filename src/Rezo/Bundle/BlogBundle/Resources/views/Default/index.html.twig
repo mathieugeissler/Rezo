@@ -1,85 +1,60 @@
 {% extends "CoreBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    '@BlogBundle/Resources/public/css/blog.css'
+    filter='cssrewrite' output='css/compiled/blog.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block hero %}
+    {% include 'BlogBundle:Default:hero.html.twig' %}
+{% endblock %}
 {% block body %}
-    <div class="container">
+    <div id="blog">
+        <div class="container">
+            <div class="row">
 
-        <div class="row">
+                <div class="col-sm-6 col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-header" style="border-bottom: solid 6px #ff0000;">
+                        </div>
+                        <div class="panel-body">
+                            <h4>Catégories</h4>
 
-            <div class="col-md-8">
-
-                {% include 'BlogBundle:Post:list.html.twig' with {'posts': posts} %}
-
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="previous">
-                        <a href="#">&larr; Older</a>
-                    </li>
-                    <li class="next">
-                        <a href="#">Newer &rarr;</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Blog Sidebar Widgets Column -->
-            <div class="col-md-4">
-                <!-- Blog Search Well -->
-                <div class="well">
-                    <h4>Blog Search</h4>
-
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
-                    </div>
-                    <!-- /.input-group -->
-                </div>
-
-                <!-- Blog Categories Well -->
-                <div class="well">
-                    <h4>Blog Categories</h4>
-                    <div class="row">
-                        {% set lenght = categories|length / 2 %}
-                        {% for category in categories|batch(lenght) %}
-                            <div class="col-lg-6">
-                                <ul class="list-unstyled">
-                                    {% for cat in category %}
-                                        <li>
-                                            <a href="{{ path('blog_category_view', {'name': cat.name}) }}">{{ cat.name }}</a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
+                            <div class="list-group">
+                                <a href="{{ path('blog_homepage') }}" class="list-group-item">Home</a>
+                                {% for cat in categories %}
+                                    <a href="{{ path('blog_category_view', {'name': cat.name}) }}"
+                                       class="list-group-item">{{ cat.name }}</a>
+                                {% endfor %}
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
-                    <!-- /.row -->
                 </div>
-
-                <!-- Side Widget Well -->
-                <div class="well">
-                    <h4>Side Widget Well</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci
-                        accusamus
-                        laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
-                </div>
+                {% if posts|length > 1 %}
+                    {% set lenght = posts|length / 2 %}
+                    {% for post in posts|batch(lenght) %}
+                        <div class="col-sm-6 col-md-4">
+                            {% include 'BlogBundle:Post:list.html.twig' with {'post': post} %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-sm-6 col-md-8 text-center">
+                        <h1>Aucun article disponible.</h1>
+                    </div>
+                {% endif %}
             </div>
         </div>
-        <!-- /.row -->
-
-        <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-        </footer>
-
     </div>
-    <!-- /.container -->
+
 {% endblock %}
+    {% block footer %}
+        {{ include('CoreBundle:Default:footer.html.twig') }}
+    {% endblock %}
+
+    {% block menu %}
+        {{ include('CoreBundle:Default:menu.html.twig') }}
+    {% endblock %}

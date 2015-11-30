@@ -1,37 +1,11 @@
 {% extends "CoreBundle::layout.html.twig" %}
+    {% block hero %}
+        {% include 'CoreBundle:Default:hero.html.twig' %}
+    {% endblock %}
 {% block body %}
-    <!--[if lt IE 7]>
-    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-        your browser</a> to improve your experience.</p>
-    <![endif]-->
+
     <!-- open/close -->
-    <header>
-        <section class="hero">
-            <div class="texture-overlay"></div>
-            <div class="container">
-                <div class="row nav-wrapper">
-                    <div class="col-md-6 col-sm-6 col-xs-6 text-left socialicon">
-                        <p><a href="https://fr.linkedin.com/in/mathieu-geissler-679472b8"><i class="fa fa-linkedin"></i></a>
-                            <a href="https://twitter.com/matsurf68"><i class="fa fa-twitter"></i></a>
-                            <a
-                                    href="https://github.com/mathieugeissler"><i class="fa fa-github"></i></a></p>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-6 text-right navicon">
-                        <p>MENU</p><a id="trigger-overlay" class="nav_slide_button nav-toggle"
-                                      href="#"><span></span></a>
-                    </div>
-                </div>
-                <div class="row hero-content">
-                    <div class="col-md-12">
-                        <h1 class="animated fadeInDown"><i class="fa fa-share-alt"> </i> Rezo by Mathieu Geissler</h1>
-                        <a href="#" class="use-btn animated fadeInUp">Contact</a> <a
-                                href="#profil" class="learn-btn animated fadeInUp">CV en ligne <i
-                                    class="fa fa-arrow-down"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </header>
+
 
     {#    <section class="screenshots" id="screenshots">
             <div class="container-fluid">
@@ -161,7 +135,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h1><a href="http://blog.mathieugeissler.fr"><i class="fa fa-link"></i> Voir le blog</a></h1>
+                    <h1><a href="{{ path('blog_homepage') }}"><i class="fa fa-link"></i> Voir le blog</a></h1>
                 </div>
             </div>
         </div>
@@ -173,7 +147,8 @@
                     <div class="features-bg">
                         <div class="texture-overlay"></div>
                         <div class="features-img wp1">
-                            <img style="width: 200px" class="roundedImageShadow" src="{{ asset('Resources/public/img/moi.png') }}" />
+                            <img style="width: 200px" class="roundedImageShadow"
+                                 src="{{ asset('Resources/public/img/moi.png') }}"/>
                         </div>
                     </div>
                 </div>

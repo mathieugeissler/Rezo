@@ -11,4 +11,12 @@ namespace Rezo\Bundle\BlogBundle\Entity;
 class PostRepository extends \Doctrine\ORM\EntityRepository
 {
 
+    /**
+     * @return Category
+     */
+    public function getCategoryName()
+    {
+
+    }
+
 }

@@ -27,6 +27,7 @@
         '@CoreBundle/Resources/public/css/animate.css'
         '@CoreBundle/Resources/public/css/styles.css'
         '@CoreBundle/Resources/public/css/queries.css'
+
         filter='cssrewrite' output='css/compiled/app.css' %}
         <link rel="stylesheet" href="{{ asset_url }}"/>
         {% endstylesheets %}
@@ -57,8 +58,14 @@
         <p>Message : {{ message }}</p>
     {% endfor %}
 {% endblock %}
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+{% block hero %}{% endblock %}
+{% block body %}
 
-{% block body %}{% endblock %}
+{% endblock %}
 {% block footer %}{% endblock %}
 {% block menu %}{% endblock %}
 

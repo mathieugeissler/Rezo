@@ -11,10 +11,13 @@ class PostController extends Controller
 
     public function viewAction(Post $post)
     {
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository('BlogBundle:Category')->findAll();
         return $this->render(
             'BlogBundle:Post:view.html.twig',
             array(
                 'post' => $post,
+                'categories' => $categories,
             )
         );
     }

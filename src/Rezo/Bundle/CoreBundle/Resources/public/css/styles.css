@@ -636,8 +636,19 @@ Hero
     color: #fff;
 }
 
+.hero-semi {
+    min-height: 100px;
+}
+
 .hero h1 {
     margin: 200px 0 45px 0;
+    font-weight: 300;
+    font-size: 45px;
+}
+
+.hero-semi h1 {
+    text-align: center;
+    margin: 50px 0 45px 0;
     font-weight: 300;
     font-size: 45px;
 }

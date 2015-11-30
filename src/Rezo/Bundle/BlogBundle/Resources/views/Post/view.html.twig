@@ -1,8 +1,52 @@
 {% extends "CoreBundle::layout.html.twig" %}
 
-{% block body %}
-<div class="container">
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.content }}</p>
-</div>
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    '@BlogBundle/Resources/public/css/blog.css'
+    filter='cssrewrite' output='css/compiled/blog.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
 {% endblock %}
+
+{% block hero %}
+    {% include 'BlogBundle:Default:hero.html.twig' %}
+{% endblock %}
+{% block body %}
+    <div id="blog">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-6 col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-header" style="border-bottom: solid 6px #ff0000;">
+                        </div>
+                        <div class="panel-body">
+                            <h4>Catégories</h4>
+
+                            <div class="list-group">
+                                <a href="{{ path('blog_homepage') }}" class="list-group-item">Home</a>
+                                {% for cat in categories %}
+                                    <a href="{{ path('blog_category_view', {'name': cat.name}) }}"
+                                       class="list-group-item">{{ cat.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                        <div class="col-sm-6 col-md-8">
+                            {% include 'BlogBundle:Post:post.html.twig' with {'post': post} %}
+                        </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+    {% block footer %}
+        {{ include('CoreBundle:Default:footer.html.twig') }}
+    {% endblock %}
+
+    {% block menu %}
+        {{ include('CoreBundle:Default:menu.html.twig') }}
+    {% endblock %}
